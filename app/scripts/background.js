@@ -1,13 +1,82 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function(details) {
-  console.log('previousVersion', details.previousVersion);
-});
+// chrome.runtime.onInstalled.addListener(function(details) {
+//   console.log('previousVersion', details.previousVersion);
+// });
 
-console.log('creating the context menu.123.');
 var yuno = yuno || {};
-var items = yuno.singletonMenus.createMenuItems();
 
-for (var id in items) {
-  console.log(items[id].title + ' : ' + items[id]);
-}
+/**
+ * Background script initialization.
+ */
+yuno.background = {
+  init: function() {
+
+    chrome.storage.local.get('isAuthenticated', function(value) {
+
+      if (value.isAuthenticated) {
+        yuno.RESTManager.isAuthenticated = value.isAuthenticated;
+      }
+      yuno.singletonMenus.createMenuItems();
+
+    });
+
+
+    chrome.runtime.onMessage.addListener(
+      function(request) { //, sender, sendResponse
+        if (request.type === 'login') {
+          yuno.RESTManager().requestServer(request, yuno.background.callback);
+        }else if (request.type === 'download') {
+          yuno.download.setDownloadDoc(request.data);
+        }
+      });
+
+  },
+  sendMessage: function(message, responseCallback) {
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message, responseCallback);
+    });
+  },
+  callback: function(status) {
+    //  alert('status: ' + status['readyState']);
+    var message = {};
+    if (status.readyState === 4 && status.status === 200) {
+      if (status.response.success) {
+        message = {
+          'type': 'loginres',
+          'response': status.response
+        };
+        // messageObj.innerText = status.response.message;
+        yuno.background.sendMessage(message, function(response) {
+          console.log(response);
+        });
+
+        yuno.singletonMenus.createMenuItems();
+      } else {
+        message = {
+          'type': 'loginres',
+          'response': status.response
+        };
+        // messageObj.innerText = status.response.message;
+        yuno.background.sendMessage(message, function(response) {
+          console.log(response);
+        });
+      }
+
+    } else {
+      message = {
+        'type': 'login_loading',
+        'readyState': status.readyState
+      };
+      // messageObj.innerText = status.response.message;
+      yuno.background.sendMessage(message, function(response) {
+        console.log(response);
+      });
+    }
+  }
+};
+
+yuno.background.init();
