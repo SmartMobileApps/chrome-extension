@@ -32,12 +32,11 @@ yuno.contentScript = {
 
     /* Listen for messages */
     chrome.runtime.onMessage.addListener(function(msg) { // sender, sendResponse
-
+      console.log(msg)
       /* If the received message has the expected format... */
       if (msg.type && (msg.type === 'login')) {
 
         yuno.dialog.init(msg.html, false);
-
       } else if (msg.type && (msg.type === 'loginres')) {
 
         yuno.dialog.message(msg.response.message, 'red');
@@ -46,12 +45,16 @@ yuno.contentScript = {
           $yuno('#' + yuno.dialog.loginDialogID).remove();
         }
       } else if (msg.type && (msg.type === 'login_loading')) {
-
-        yuno.dialog.message('connecting server status: ' +
-                            msg.readyState, 'orange');
+        document.getElementById("yuno-status").innerHTML = msg.response.message;
       } else if (msg.type && (msg.type === 'saveToTemplate')) {
-
+        if(yuno && yuno.dialog)
         yuno.dialog.init(msg.html, true);
+      }else if (msg.type && (msg.type === 'saveToTemplateRes')) {
+        document.getElementById("yuno-status-temp").innerHTML = msg.response.message;
+        if (msg.response.success) {
+          $yuno('#fade').remove();
+          $yuno('#' + yuno.dialog.tempDialogID).remove();
+        }
       } else if (msg.type && (msg.type === 'exportChart1')) {
         var s1 = window.getSelection();
         if (s1.toString() && s1.toString().length > 0) {
@@ -65,9 +68,9 @@ yuno.contentScript = {
           if (parent1 != null && parent1.tagName === 'TABLE') {
             // export logic to charts here.
             // alert('Table object selected.2.');
-            console.log('Table selected..');
-            console.log(parent1);
-              yuno.charts.generateBarChart(parent1);
+            //console.log('Table selected..');
+            //console.log(parent1);
+            yuno.charts.generateBarChart(parent1);
 
           } else {
             alert('Selected text is not in a table.');
@@ -84,28 +87,34 @@ yuno.contentScript = {
           var parent = s.anchorNode.parentNode;
           var xpath = yuno.contentScript.getXPath(parent);
           var title = document.title;
+          title = title.replace(/([^a-z0-9\s\.])/gi, '');
           var html = '';
 
-          html += ' <h1 align="center">' + title + '</h1>';
+          html += ' <h1 align="center">' + document.title + '</h1>';
           html += '<br\>';
           html += '<br\>';
           html += '<h3>URL:</h3>';
           html += '<p>' + document.URL + '</p>';
-          html += '<h3>XPATH:</h3>';
-          html += '<p>' + xpath + '</p>';
+          // html += '<h3>XPATH:</h3>';
+          // html += '<p>' + xpath + '</p>';
           html += '<h3>Selected Text:</h3>';
-          html += '<p>' + selection + '</p>';
+          html += '<p>' + selection.replace(/[\“\”]/ig, '"') + '</p>';
           html += '<br\>';
           html += '<br\>';
-          html += '<h3 align="center">Document ' +
-            'created by YUNO chrome extension.</h3>';
+          html += '<p><b>Created on : </b>' +
+            dateFormat(new Date(), "dddd, mmmm dS, yyyy, h:MM:ss TT"); + '</p>';
+          // html += '<h3 align="center">Document ' +
+          //   'created by YUNO chrome extension.</h3>';
 
 
 
           // yuno.download.setDownloadDoc(s.toString());
           var config = {
             'type': 'download',
-            'data': {'title': title, 'html': html}
+            'data': {
+              'title': title,
+              'html': html
+            }
           };
 
           chrome.runtime.sendMessage(config, function(response) {
@@ -115,6 +124,11 @@ yuno.contentScript = {
           alert('Please select some text');
         }
       }
+    });
+  },
+  message: function(message, color) {
+    $yuno('#yuno-status').html(message).css({
+      color: color
     });
   }
 };

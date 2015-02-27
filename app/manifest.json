@@ -16,6 +16,7 @@
     "css": ["styles/main.css"],
     "matches": ["<all_urls>"],
     "js":      ["libs/jquery.js",
+                "libs/DateFormat.js",
                 "scripts/canvasjs.js",
                 "scripts/charts.js",
                 "scripts/dialog.js",
@@ -26,5 +27,8 @@
                   "activeTab",
                   "tabs",
                   "storage",
-                  "downloads"]
+                  "downloads",
+                  "<all_urls>",
+                  "webRequestBlocking",
+                  "webRequest"]
 }

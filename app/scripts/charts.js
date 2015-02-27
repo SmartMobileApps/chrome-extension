@@ -62,6 +62,9 @@ yuno.charts = {
 
     for (var c = 1; c < headers.length; c++) {
       var dSeries = {
+        indexLabelPlacement: 'outside',
+        indexLabel: '{y}',
+        indexLabelOrientation: 'vertical',
         type: 'column',
         name: headers[c]
       };
@@ -70,6 +73,7 @@ yuno.charts = {
         var point = {};
         point['label'] = array[r][0] + ':' + headers[c];
         point['y'] = array[r][c];
+        point['indexLabel'] = headers[c] + ' : ' + array[r][c];
         dataPoints.push(point);
       }
       dSeries['dataPoints'] = dataPoints;
@@ -82,7 +86,7 @@ yuno.charts = {
       title: {
         text: document.title
       },
-
+      exportEnabled: true,
       data: data
     });
 

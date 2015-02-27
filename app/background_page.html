@@ -28,7 +28,7 @@
       <yuno-p class="login-submit">
         <button type="button" id="yuno-loginSubmit" class="login-button">Login</button>
       </yuno-p>
-       <div id="yuno-status"></div>
+       <div id="yuno-status" style="color:red"></div>
 
       <div id="yuno-footer"><a id="yuno-footer-link" href="http://www.yunocorp.com/" target="_blank">Forgot your password?</a>
       </div>
@@ -40,7 +40,7 @@
     <div id="yuno-heading">Yuno
       <yuno-a href="javascript:" id="yuno-closeDialog">x</yuno-a>
     </div>
-    <div id="yuno-status"></div>
+    <div id="yuno-status-temp" style="color:orange"></div>
 
         <div id="yuno-form" method="post" action="#" style="width:400px;">
           <yuno-p>
@@ -48,10 +48,10 @@
             <input type="text" name="yuno-label" id="templateyuno-Label" placeholder="sample template">
           </yuno-p>
 
-          <yuno-p>
-            <div id="yuno-label2" for="xpath" style="width:30%; display:inline-block;">XPATH:</div>
-            <input type="text" name="xpath" id="yuno-parentXpath">
-          </yuno-p>
+          <!-- <yuno-p> -->
+          <!--   <div id="yuno-label2" for="xpath" style="width:30%; display:inline-block;">XPATH:</div> -->
+          <!--   <input type="text" name="xpath" id="yuno-parentXpath"> -->
+          <!-- </yuno-p> -->
 
           <yuno-p>
             <div id="yuno-label3" for="selection" style="width:30%; display:inline-block;">Selected Text:</div>
@@ -84,9 +84,10 @@
   <!-- endbuild -->
 
   <!-- build:js scripts/options.js -->
+  <script src="libs/jquery.js"></script>
   <script src="libs/RESTManager.js"></script>
   <script src="scripts/menu.js"></script>
-    <script src="scripts/download.js"></script>
+  <script src="scripts/download.js"></script>
   <script src="scripts/background.js"></script>
   <!-- endbuild -->
 

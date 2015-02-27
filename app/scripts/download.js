@@ -14,6 +14,7 @@ yuno.download = {
       "xmlns:o='urn:schemas-microsoft-com:office:office' " +
       "xmlns:w='urn:schemas-microsoft-com:office:word'" +
       "xmlns='http://www.w3.org/TR/REC-html40'>" +
+      "<META content='text/html; charset=utf-8' http-equiv='Content-Type'>"+
       '<head><title>' + data.title + '</title>';
 
     // str+="<!--[if gte mso 9]>" +
@@ -41,7 +42,6 @@ yuno.download = {
     str += '<body lang=EN-US style=""tab-interval:.5in">' +
       '<div class=Section1>' + data.html +
       '</div></body></html>';
-
 
     var blob = new Blob([str], { type: 'application/msword',
                                  endings: 'native' });

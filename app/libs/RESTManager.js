@@ -9,6 +9,8 @@ var yuno = yuno || {};
  * REST manager API to handle network communctions.
  */
 yuno.RESTManager = function() {
+  var baseURL = "http://yuno.herokuapp.com";
+//  var baseURL = "http://localhost:3000";
 
   /*
    * Check the session from localStorage/cookies
@@ -30,6 +32,65 @@ yuno.RESTManager = function() {
     mockHTTPRequest(config, callback);
   };
 
+  var userAuth = function(config,callback){
+    var status = {'status':200,'readyState':0};
+    status['response'] = {};
+    var loginReq = $yuno.post(baseURL+"/auth/signin",config);
+    loginReq.done(function(data){
+      status['status'] = 200;
+      status['readyState'] = 4;
+      yuno.RESTManager.isAuthenticated = true;
+      yuno.RESTManager.userId = data['_id'];
+      status['response']['success'] = true;
+      status['response']['message'] = 'Successfully logged.';
+      chrome.storage.local.set({'isAuthenticated': true}, function() {});
+      chrome.storage.local.set({'userId': data['_id']}, function() {});
+    })
+    loginReq.fail(function(data){
+      status['status'] = 400;
+      yuno.RESTManager.isAuthenticated = false;
+      status['response']['success'] = false;
+      status['response']['message'] = "Unknown user or invalid password";
+    })
+    loginReq.always(function(){
+      callback(status);
+    })
+  }
+  var userSignOut = function(config,callback){
+    $.get(baseURL+"/auth/signout");
+    var status = {'status':200,'readyState':4,'response':{'success':true,'message':"Logout Successfull"}};
+    callback(status);
+  }
+
+  var templateSave = function(config,callback){
+    var status = {'status':200,'readyState':4};
+    status['response'] = {};
+    chrome.storage.local.get('userId', function(user) {
+      var data = {
+        '_id':user.userId,
+        'template':{
+          'title':config.title,
+          'selection':config.content,
+          'xpath':config.xpath,
+          'url':config.url
+        }
+      }
+      var saveReq = $yuno.post(baseURL+"/api/v1/save",data);
+      saveReq.done(function(data){
+        status['response']['success'] = true;
+        status['response']['message'] = "Successfully added template";
+      });
+      saveReq.fail(function(data){
+        status['response']['success'] = false;
+        status['response']['message'] = "No agent set to record";
+      });
+      saveReq.always(function(data){
+        status['status'] = data.status;
+        status['readyState'] = data.readyState;
+        callback(status)
+      });
+    });
+  }
   var mockStatus = 0;
   /**
    * Mock HTTP request object.
@@ -62,7 +123,10 @@ yuno.RESTManager = function() {
 
   return {
     checkSession: checkSession,
-    requestServer: requestServer
+    requestServer: requestServer,
+    userAuth: userAuth,
+    templateSave: templateSave,
+    userSignOut:userSignOut
   };
 };
 

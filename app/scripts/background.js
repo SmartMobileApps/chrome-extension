@@ -25,7 +25,9 @@ yuno.background = {
     chrome.runtime.onMessage.addListener(
       function(request) { //, sender, sendResponse
         if (request.type === 'login') {
-          yuno.RESTManager().requestServer(request, yuno.background.callback);
+          yuno.RESTManager().userAuth(request, yuno.background.callback);
+        }else if (request.type === 'saveToTemplate') {
+          yuno.RESTManager().templateSave(request, yuno.background.saveTempCall);
         }else if (request.type === 'download') {
           yuno.download.setDownloadDoc(request.data);
         }
@@ -69,13 +71,24 @@ yuno.background = {
     } else {
       message = {
         'type': 'login_loading',
-        'readyState': status.readyState
+        'readyState': status.readyState,
+        'response': status.response
       };
       // messageObj.innerText = status.response.message;
       yuno.background.sendMessage(message, function(response) {
         console.log(response);
       });
     }
+  },
+  saveTempCall:function(status){
+    var message = {};
+    message = {
+      'type': 'saveToTemplateRes',
+      'response': status.response
+    };
+    yuno.background.sendMessage(message, function(response) {
+      console.log(response);
+    });
   }
 };
 
