@@ -1,34 +1,42 @@
 {
-  "name": "__MSG_appName__",
-  "version": "0.0.1",
-  "manifest_version": 2,
-  "description": "__MSG_appDescription__",
-  "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
-  },
-  "default_locale": "en",
-  "background": {
-    "page": "background_page.html"
-  },
-
-  "content_scripts": [{
-    "css": ["styles/main.css"],
-    "matches": ["<all_urls>"],
-    "js":      ["libs/jquery.js",
+    "name": "__MSG_appName__",
+    "version": "0.0.2",
+    "manifest_version": 2,
+    "description": "__MSG_appDescription__",
+    "icons": {
+        "16": "images/icon-16.png",
+        "128": "images/icon-128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "page": "background_page.html"
+    },
+    "content_scripts": [
+        {
+            "css": [
+                "styles/main.css"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "libs/jquery.js",
                 "libs/DateFormat.js",
                 "scripts/canvasjs.js",
                 "scripts/charts.js",
                 "scripts/dialog.js",
-                "scripts/content.js"]
-  }],
-  "permissions": [
-                  "contextMenus",
-                  "activeTab",
-                  "tabs",
-                  "storage",
-                  "downloads",
-                  "<all_urls>",
-                  "webRequestBlocking",
-                  "webRequest"]
+                "scripts/content.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "contextMenus",
+        "activeTab",
+        "tabs",
+        "storage",
+        "downloads",
+        "<all_urls>",
+        "webRequestBlocking",
+        "webRequest"
+    ]
 }
