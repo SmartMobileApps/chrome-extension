@@ -121,6 +121,7 @@ yuno.dialog = {
         var loginButton = document.getElementById('yuno-loginSubmit');
         if (loginButton) {
             loginButton.onclick = function() {
+                document.getElementById('yuno-status').style.display = 'none';
                 var usernameObj = document.getElementById('yuno-username');
                 var passwordObj = document.getElementById('yuno-password');
 
@@ -136,10 +137,11 @@ yuno.dialog = {
                     };
 
                     chrome.runtime.sendMessage(config, function(response) {
-                        console.log(response);
+                        //console.log(response);
                     });
                 } else {
-                    yuno.dialog.message('Please enter valid credentials', 'red');
+                    document.getElementById('yuno-status').style.display = 'block';
+                    yuno.dialog.message('Please enter valid credentials', 'white');
                 }
             };
         }
@@ -147,6 +149,7 @@ yuno.dialog = {
         var saveTempBtn = document.getElementById('yuno-saveTemplate');
         if (saveTempBtn) {
             saveTempBtn.onclick = function() {
+                document.getElementById('yuno-status').style.display = 'none';
                 var title = document.getElementById('templateyuno-Label');
                 var content = document.getElementById('yuno-selection');
 
@@ -172,7 +175,8 @@ yuno.dialog = {
                         console.log(response);
                     });
                 } else {
-                    yuno.dialog.message('Please enter valid data', 'red');
+                    document.getElementById('yuno-status').style.display = 'block';
+                    yuno.dialog.message('Please Enter valid data', 'white');
                 }
             };
         }

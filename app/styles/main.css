@@ -135,18 +135,12 @@
 }
 #yuno-heading {
     color: #FFF;
-    background: #252733;
-    font-size: 26px;
     display: block;
     padding-bottom: 5px;
-    text-align: center;
-    border-bottom: 1px solid #999;
     margin-bottom: 15px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 yuno-a, #yuno-closeDialog {
     display: inline;
@@ -189,6 +183,10 @@ yuno-p input {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    background: #FE0002;
+    color: white;
+    padding: 3px;
+    text-align: center;
 }
 #yuno-form {
     width: 100%;
@@ -205,13 +203,13 @@ yuno-p input {
 }
 #yuno-footer {
     display: block;
-    background: #eee;
+    background: none;
     padding: 10px;
     margin-left: -10px;
     margin-right: 0px;
     margin-bottom: -24px;
     margin-top: 10px;
-    border-top: 1px solid #787878;
+    border-top: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 15px;
     font-weight: 300;
@@ -222,16 +220,18 @@ yuno-p input {
 }
 #yuno-footer-link {
     display: block;
-    background: #eee;
+    background: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 15px;
     font-weight: 300;
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    background: none;
+    text-align: center;
+    text-decoration: none;
+    color: #268CD6;
 }
-#yuno-username, #yuno-password {
-    width: 63%;
+#yuno-username, #yuno-password, #templateyuno-Label {
+    width: 96%;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 15px;
     font-weight: 300;
@@ -239,6 +239,10 @@ yuno-p input {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     height: 23px;
+    width: 96%;
+    padding: 18px;
+    border-radius: 5px;
+    border: 1px solid #BDBDBD;
 }
 #yuno-label1, #yuno-label2, #yuno-label3, #yuno-label4, #yuno-label5 {
     width: 30%;
@@ -277,7 +281,6 @@ yuno-p input {
 }
 #yuno-saveTemplate, #yuno-loginSubmit {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 15px;
     font-weight: 300;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -292,11 +295,13 @@ yuno-p input {
     text-decoration: none;
     cursor: pointer;
     border: none;
-    border-radius: 2px;
-    padding: 5px;
-    background-color: #252733;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #268CD6;
     box-shadow: 0px 2px 2px #777;
     margin-left: 200px;
+    box-shadow: none;
+    font-size: 18px;
 }
 #yuno-message {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -309,6 +314,8 @@ yuno-p input {
 }
 .yuno-white_content#yuno_ext_loginDialog {
     height: auto !important;
+    padding: 20px;
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(221, 221, 221, 1) 99%, rgba(237, 237, 237, 1) 100%);
 }
 .yuno-white_content#yuno-chartsDialog {
     display: block;
@@ -325,4 +332,21 @@ yuno-p input {
 .yuno-white_content#yuno-chartsDialog #yuno-closeDialog {
     float: left;
     margin-left: -30px;
+}
+yuno-a, #yuno-closedialog {
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    width: 25px;
+    padding-left: 8px;
+    padding-top: 0px;
+    padding-bottom: 4px;
+}
+#yuno_ext_templateDialog {
+    padding: 20px;
+    height: auto;
+    background: -webkit-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(221, 221, 221) 99%, rgb(237, 237, 237) 100%);
+}
+
+#yuno-selection{
+    background: white;
 }
